@@ -79,7 +79,8 @@ void findMean() {
   getline(cin, response);
   nums = determineVector(response);
 
-  cout << "\nThe mean of " << printVector(nums) << " is: " << Mean(nums) << "\n\n";
+  cout << "\nThe mean of " << printVector(nums) << " is: " << Mean(nums) << "\n";
+  cout << "With the size of n = " << nums.size() << "\n\n";
 }
 
 void findVariance() {
@@ -90,7 +91,8 @@ void findVariance() {
   getline(cin, response);
   nums = determineVector(response);
 
-  cout << "\nThe variance of " << printVector(nums) << " is: " << Variance(nums) << "\n\n";
+  cout << "\nThe variance of " << printVector(nums) << " is: " << Variance(nums) << "\n";
+  cout << "With the size of n = " << nums.size() << "\n\n";
 }
 
 void findDeviation() {
@@ -101,7 +103,8 @@ void findDeviation() {
   getline(cin, response);
   nums = determineVector(response);
 
-  cout << "\nThe deviation of " << printVector(nums) << " is: " << Deviation(nums) << "\n\n";
+  cout << "\nThe deviation of " << printVector(nums) << " is: " << Deviation(nums) << "\n";
+  cout << "With the size of n = " << nums.size() << "\n\n";
 }
 
 void decideFunction() {

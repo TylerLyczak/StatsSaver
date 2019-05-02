@@ -37,6 +37,23 @@ double Deviation (vector<double> nums)  {
   return answer;
 }
 
+double factorial (double num) {
+  if (num == 0) {
+    return 1;
+  }
+
+  double sum = num;
+  num--;
+  for (num; num>0; num--) {
+    sum *= num;
+  }
+  return sum;
+}
+
+double Binomial ()  {
+  return 0;
+}
+
 template <class T>
 string printVector(vector<T> nums)  {
   string response = "";
@@ -118,6 +135,7 @@ void decideFunction() {
     cout << "1 - Mean" << endl;
     cout << "2 - Variance" << endl;
     cout << "3 - Deviation" << endl;
+    cout << "4 - Binomial Distribution" << endl;
     cout << "0 - Quit" << endl;
 
     getline(cin, response);
@@ -133,6 +151,9 @@ void decideFunction() {
     }
     else if (response.compare("3") == 0)  {
       findDeviation();
+    }
+    else if (response.compare("4") == 0)  {
+      factorial(0);
     }
     else  {
       cout << "Not an option, try again...\n" << endl;

@@ -141,11 +141,14 @@ void findBinomial() {
   double pVal;
   cout << "\nFind Binomial Distribution" << endl;
   cout << "Enter x value: " << endl;
-  cin >> xVal;
+  getline(cin, response);
+  xVal = stod(response);
   cout << "\nEnter n value: " << endl;
-  cin >> nVal;
+  getline(cin, response);
+  nVal = stod(response);
   cout << "\nEnter p value: " << endl;
-  cin >> pVal;
+  getline(cin, response);
+  pVal = stod(response);
   cout << "\n";
 
   cout << "Value for binomial distribution is : " << Binomial(xVal, nVal, pVal) << "\n\n";
@@ -167,7 +170,6 @@ void decideFunction() {
     cout << "0 - Quit" << endl;
 
     getline(cin, response);
-    cout << "Response: " << response << endl;
 
     if (response.compare("0") == 0)  {
       break;

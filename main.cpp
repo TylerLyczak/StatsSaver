@@ -50,8 +50,18 @@ double factorial (double num) {
   return sum;
 }
 
-double Binomial ()  {
-  return 0;
+double Binomial (double x, double n, double p)  {
+  // Combination
+  double top = factorial(n);
+  double bottom = factorial(n-x) * factorial(x);
+  double combination = top/bottom;
+
+  // p and q
+  double pExp = pow(p,x);
+  double qExp = pow( (1-p), n-x);
+
+  double answer = combination * pExp * qExp;
+  return answer;
 }
 
 template <class T>
@@ -124,6 +134,24 @@ void findDeviation() {
   cout << "With the size of n = " << nums.size() << "\n\n";
 }
 
+void findBinomial() {
+  string response;
+  double xVal;
+  double nVal;
+  double pVal;
+  cout << "\nFind Binomial Distribution" << endl;
+  cout << "Enter x value: " << endl;
+  cin >> xVal;
+  cout << "\nEnter n value: " << endl;
+  cin >> nVal;
+  cout << "\nEnter p value: " << endl;
+  cin >> pVal;
+  cout << "\n";
+
+  cout << "Value for binomial distribution is : " << Binomial(xVal, nVal, pVal) << "\n\n";
+  cin.clear();
+}
+
 void decideFunction() {
   string response;
   while(true)  {
@@ -139,6 +167,7 @@ void decideFunction() {
     cout << "0 - Quit" << endl;
 
     getline(cin, response);
+    cout << "Response: " << response << endl;
 
     if (response.compare("0") == 0)  {
       break;
@@ -153,11 +182,13 @@ void decideFunction() {
       findDeviation();
     }
     else if (response.compare("4") == 0)  {
-      factorial(0);
+      findBinomial();
     }
     else  {
       cout << "Not an option, try again...\n" << endl;
     }
+
+    cin.clear();
   }
 }
 

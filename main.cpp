@@ -64,6 +64,16 @@ double Binomial (double x, double n, double p)  {
   return answer;
 }
 
+double BinomialExpected (double n, double p)  {
+  return n*p;
+}
+
+double Geometric (double x, double p) {
+  double fistPart = pow((1 - p), (x-1));
+  double answer = fistPart * p;
+  return answer;
+}
+
 template <class T>
 string printVector(vector<T> nums)  {
   string response = "";
@@ -155,6 +165,41 @@ void findBinomial() {
   cin.clear();
 }
 
+void findBinomialExpected()  {
+  string response;
+  double nVal;
+  double pVal;
+
+  cout << "\nFind Binomial Expected Value" << endl;
+  cout << "\nEnter n value: " << endl;
+  getline(cin, response);
+  nVal = stod(response);
+  cout << "\nEnter p value: " << endl;
+  getline(cin, response);
+  pVal = stod(response);
+  cout << "\n";
+
+  cout << "Value for expected value is: " << BinomialExpected(nVal, pVal) << "\n\n";
+  cin.clear();
+}
+
+void findGeometric()  {
+  string response;
+  double xVal;
+  double pVal;
+
+  cout << "Enter x value: " << endl;
+  getline(cin, response);
+  xVal = stod(response);
+  cout << "\nEnter p value: " << endl;
+  getline(cin, response);
+  pVal = stod(response);
+  cout << "\n";
+
+  cout << "Value for Geometric Distribution is: " << Geometric(xVal, pVal) << "\n\n";
+  cin.clear();
+}
+
 void decideFunction() {
   string response;
   while(true)  {
@@ -167,6 +212,8 @@ void decideFunction() {
     cout << "2 - Variance" << endl;
     cout << "3 - Deviation" << endl;
     cout << "4 - Binomial Distribution" << endl;
+    cout << "5 - Binomial Expected Value" << endl;
+    cout << "6 - Geometric Distribution" << endl;
     cout << "0 - Quit" << endl;
 
     getline(cin, response);
@@ -185,6 +232,12 @@ void decideFunction() {
     }
     else if (response.compare("4") == 0)  {
       findBinomial();
+    }
+    else if (response.compare("5") == 0)  {
+      findBinomialExpected();
+    }
+    else if (response.compare("6") == 0)  {
+      findGeometric();
     }
     else  {
       cout << "Not an option, try again...\n" << endl;

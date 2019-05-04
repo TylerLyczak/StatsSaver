@@ -149,13 +149,16 @@ void findBinomial() {
   double xVal;
   double nVal;
   double pVal;
+
   cout << "\nFind Binomial Distribution" << endl;
   cout << "Enter x value: " << endl;
   getline(cin, response);
   xVal = stod(response);
+
   cout << "\nEnter n value: " << endl;
   getline(cin, response);
   nVal = stod(response);
+
   cout << "\nEnter p value: " << endl;
   getline(cin, response);
   pVal = stod(response);
@@ -174,6 +177,7 @@ void findBinomialExpected()  {
   cout << "\nEnter n value: " << endl;
   getline(cin, response);
   nVal = stod(response);
+  
   cout << "\nEnter p value: " << endl;
   getline(cin, response);
   pVal = stod(response);

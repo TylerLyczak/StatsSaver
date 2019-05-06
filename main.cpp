@@ -108,6 +108,28 @@ vector<double> determineVector(string response) {
   return nums;
 }
 
+void addToDataVector (vector<vector<double>> &userData, vector<string> &dataNames)  {
+  string response;
+  cout << "Enter a name: " << endl;
+  getline(cin, response);
+  dataNames.push_back(response);
+  cout << "\n";
+  cin.clear();
+
+  cout << "Enter the numbers you want to calculate (seperate by whitespace)" << endl;
+  getline(cin, response);
+  userData.push_back(determineVector(response));
+  cout << "\n";
+  cin.clear();
+
+  for (int i=0; i<dataNames.size(); i++)  {
+    cout << "Name: " << dataNames.at(i) << endl;
+    cout << printVector(userData.at(i)) << endl;
+    cout << "\n";
+  }
+  cout << "\n";
+}
+
 void findMean() {
   string response;
   vector<double> nums;
@@ -177,7 +199,7 @@ void findBinomialExpected()  {
   cout << "\nEnter n value: " << endl;
   getline(cin, response);
   nVal = stod(response);
-  
+
   cout << "\nEnter p value: " << endl;
   getline(cin, response);
   pVal = stod(response);
@@ -205,6 +227,8 @@ void findGeometric()  {
 }
 
 void decideFunction() {
+  vector <string> dataNames;
+  vector <vector<double>> userData;
   string response;
   while(true)  {
     response = "";
@@ -212,6 +236,7 @@ void decideFunction() {
     cout << "Welcome to Stats Saver" << endl;
 
     cout << "Select what you want to do" << endl;
+    cout << "S - Store data points in vector" << endl;
     cout << "1 - Mean" << endl;
     cout << "2 - Variance" << endl;
     cout << "3 - Deviation" << endl;
@@ -224,6 +249,9 @@ void decideFunction() {
 
     if (response.compare("0") == 0)  {
       break;
+    }
+    else if (response.compare("S") || response.compare("s"))  {
+      addToDataVector(userData, dataNames);
     }
     else if (response.compare("1") == 0)  {
       findMean();

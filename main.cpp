@@ -6,6 +6,12 @@
 
 using namespace std;
 
+// Global variables that store all the user data
+vector <string> dataNames;
+vector <vector<double>> userData;
+
+// ----------------------------------------------------------------------------
+// Functions to calculate the value of a given command
 double Mean (vector<double> nums) {
   double n = nums.size();
   double sum = 0;
@@ -73,7 +79,12 @@ double Geometric (double x, double p) {
   double answer = fistPart * p;
   return answer;
 }
+// ----------------------------------------------------------------------------
 
+// ----------------------------------------------------------------------------
+// Vector helper funcitons
+
+// Prints any vector given
 template <class T>
 string printVector(vector<T> nums)  {
   string response = "";
@@ -87,6 +98,16 @@ string printVector(vector<T> nums)  {
   }
   response += "]";
   return response;
+}
+
+// Prints the global vectors that the user stores.
+void printGlobalVectors()  {
+  for (int i=0; i<dataNames.size(); i++)  {
+    cout << "Name: " << dataNames.at(i) << endl;
+    cout << printVector(userData.at(i)) << endl;
+    cout << "\n";
+  }
+  cout << "\n";
 }
 
 vector<double> determineVector(string response) {
@@ -108,7 +129,7 @@ vector<double> determineVector(string response) {
   return nums;
 }
 
-void addToDataVector (vector<vector<double>> &userData, vector<string> &dataNames)  {
+void addToDataVector ()  {
   string response;
   cout << "Enter a name: " << endl;
   getline(cin, response);
@@ -130,13 +151,35 @@ void addToDataVector (vector<vector<double>> &userData, vector<string> &dataName
   cout << "\n";
 }
 
+// Finds the index of the name to use for the data vector
+int findIndex(string name)  {
+  for (int i=0; i<dataNames.size(); i++)  {
+    if (dataNames.at(i).compare(name) == 0) {
+      return i;
+    }
+  }
+  return -1;
+}
+// ----------------------------------------------------------------------------
+
+// ----------------------------------------------------------------------------
+// Functions that are called by main to determine what the user wants
 void findMean() {
   string response;
   vector<double> nums;
   cout << "\nFind Mean" << endl;
-  cout << "Enter the numbers you want to calculate (seperate by whitespace)" << endl;
+  cout << "Enter the name of the vector you want to use ( use -d to display all the names and data)" << endl;
   getline(cin, response);
-  nums = determineVector(response);
+  if (response.compare("-d") == 0)  {
+    printGlobalVectors();
+    findMean();
+  }
+  int index = findIndex(response);
+  if (index == -1)  {
+    cout << "Invalid name, try again..." << endl;
+    findMean();
+  }
+  nums = userData.at(index);
 
   cout << "\nThe mean of " << printVector(nums) << " is: " << Mean(nums) << "\n";
   cout << "With the size of n = " << nums.size() << "\n\n";
@@ -146,9 +189,18 @@ void findVariance() {
   string response;
   vector<double> nums;
   cout << "\nFind Variance" << endl;
-  cout << "Enter the numbers you want to calculate (seperate by whitespace)" << endl;
+  cout << "Enter the name of the vector you want to use ( use -d to display all the names and data)" << endl;
   getline(cin, response);
-  nums = determineVector(response);
+  if (response.compare("-d") == 0)  {
+    printGlobalVectors();
+    findMean();
+  }
+  int index = findIndex(response);
+  if (index == -1)  {
+    cout << "Invalid name, try again..." << endl;
+    findMean();
+  }
+  nums = userData.at(index);
 
   cout << "\nThe variance of " << printVector(nums) << " is: " << Variance(nums) << "\n";
   cout << "With the size of n = " << nums.size() << "\n\n";
@@ -158,9 +210,18 @@ void findDeviation() {
   string response;
   vector<double> nums;
   cout << "\nFind Deviation" << endl;
-  cout << "Enter the numbers you want to calculate (seperate by whitespace)" << endl;
+  cout << "Enter the name of the vector you want to use ( use -d to display all the names and data)" << endl;
   getline(cin, response);
-  nums = determineVector(response);
+  if (response.compare("-d") == 0)  {
+    printGlobalVectors();
+    findMean();
+  }
+  int index = findIndex(response);
+  if (index == -1)  {
+    cout << "Invalid name, try again..." << endl;
+    findMean();
+  }
+  nums = userData.at(index);
 
   cout << "\nThe deviation of " << printVector(nums) << " is: " << Deviation(nums) << "\n";
   cout << "With the size of n = " << nums.size() << "\n\n";
@@ -225,10 +286,10 @@ void findGeometric()  {
   cout << "Value for Geometric Distribution is: " << Geometric(xVal, pVal) << "\n\n";
   cin.clear();
 }
+// ----------------------------------------------------------------------------
 
+// ----------------------------------------------------------------------------
 void decideFunction() {
-  vector <string> dataNames;
-  vector <vector<double>> userData;
   string response;
   while(true)  {
     response = "";
@@ -250,8 +311,8 @@ void decideFunction() {
     if (response.compare("0") == 0)  {
       break;
     }
-    else if (response.compare("S") || response.compare("s"))  {
-      addToDataVector(userData, dataNames);
+    else if (response.compare("S") == 0 || response.compare("s") == 0)  {
+      addToDataVector();
     }
     else if (response.compare("1") == 0)  {
       findMean();

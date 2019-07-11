@@ -294,7 +294,7 @@ void decideFunction() {
   while(true)  {
     response = "";
 
-    cout << "Welcome to Stats Saver" << endl;
+    cout << "Welcome to Stats Saver\n" << endl;
 
     cout << "Select what you want to do" << endl;
     cout << "S - Store data points in vector" << endl;

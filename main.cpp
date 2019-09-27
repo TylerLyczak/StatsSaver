@@ -326,6 +326,7 @@ void findGeometric()  {
   cout << "Enter x value: " << endl;
   getline(cin, response);
   xVal = stod(response);
+  
   cout << "\nEnter p value: " << endl;
   getline(cin, response);
   pVal = stod(response);

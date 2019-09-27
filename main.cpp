@@ -131,6 +131,8 @@ vector<double> determineVector(string response) {
   return nums;
 }
 
+
+// Adds data that the user wants to the unordered_map
 void addToDataVector ()  {
   string responseName;
   string responseData;
@@ -153,6 +155,35 @@ void addToDataVector ()  {
   }
 
   cout << "\n";
+}
+
+
+// Removes data from the unordered_map
+void removeData ()
+{
+  string response;
+  bool found = false;
+
+  cout << "Enter a name to remove: (-s to go back)" << endl;
+  getline(cin, response);
+  cout << "\n";
+  cin.clear();
+
+  if (response.compare("-s") == 0)    return;
+
+  for (auto x : dataMap)  {
+    if (x.first.compare(response) == 0) {
+      found == true;
+    }
+  }
+
+  if (found)  {
+    cout << "Removed " << response << " from the data"
+  }
+  else  {
+    cout << "Couldn't find " << response << " from the data, try again...";
+  }
+  return;
 }
 
 // Finds the index of the name to use for the data vector
@@ -301,7 +332,8 @@ void decideFunction() {
     cout << "Welcome to Stats Saver\n" << endl;
 
     cout << "Select what you want to do" << endl;
-    cout << "S - Store data points in vector" << endl;
+    cout << "S - Store data" << endl;
+    cout << "R - Remove data" << endl;
     cout << "1 - Mean" << endl;
     cout << "2 - Variance" << endl;
     cout << "3 - Deviation" << endl;
@@ -317,6 +349,9 @@ void decideFunction() {
     }
     else if (response.compare("S") == 0 || response.compare("s") == 0)  {
       addToDataVector();
+    }
+    else if (response.compare("R") == 0 || response.compare("r") == 0)  {
+      removeData();
     }
     else if (response.compare("1") == 0)  {
       findMean();
@@ -345,7 +380,7 @@ void decideFunction() {
 }
 
 int main () {
+  // All of the funcitonality is handled by that function;
   decideFunction();
-
   return 0;
 }

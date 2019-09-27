@@ -3,9 +3,15 @@
 #include <math.h>
 #include <string>
 #include <sstream>
+#include <unordered_map>
 
 using namespace std;
 
+// Global variables that store all the user data
+unordered_map<string, vector<double>> dataMap;
+
+// ----------------------------------------------------------------------------
+// Functions to calculate the value of a given command
 double Mean (vector<double> nums) {
   double n = nums.size();
   double sum = 0;
@@ -73,7 +79,12 @@ double Geometric (double x, double p) {
   double answer = fistPart * p;
   return answer;
 }
+// ----------------------------------------------------------------------------
 
+// ----------------------------------------------------------------------------
+// Vector helper funcitons
+
+// Prints any vector given
 template <class T>
 string printVector(vector<T> nums)  {
   string response = "";
@@ -89,6 +100,8 @@ string printVector(vector<T> nums)  {
   return response;
 }
 
+
+// Makes a vector of doubles from a string
 vector<double> determineVector(string response) {
   vector<double> nums;
   string delim = " ";
@@ -108,13 +121,105 @@ vector<double> determineVector(string response) {
   return nums;
 }
 
+
+// Adds data that the user wants to the unordered_map
+void addToDataMap ()  {
+  string responseName;
+  string responseData;
+
+  cout << "Enter a name: " << endl;
+  getline(cin, responseName);
+  cout << "\n";
+  cin.clear();
+
+  cout << "Enter the numbers you want to calculate (seperate by whitespace)" << endl;
+  getline(cin, responseData);
+  dataMap[responseName] = determineVector(responseData);
+  cout << "\n";
+  cin.clear();
+
+  for (auto x : dataMap)  {
+    cout << "Name: " << x.first << endl;
+    cout << printVector(x.second) << endl;
+    cout << "\n";
+  }
+
+  cout << "\n";
+}
+
+
+// Removes data from the unordered_map
+void removeData ()
+{
+  string response;
+  bool found = false;
+
+  cout << "Enter a name to remove: (-s to go back)" << endl;
+  getline(cin, response);
+  cout << "\n";
+  cin.clear();
+
+  if (response.compare("-s") == 0)    return;
+
+  for (auto x : dataMap)  {
+    if (x.first.compare(response) == 0) {
+      found == true;
+    }
+  }
+
+  if (found)  {
+    cout << "Removed " << response << " from the data";
+  }
+  else  {
+    cout << "Couldn't find " << response << " from the data, try again...";
+  }
+  return;
+}
+
+
+// Prints the whole map
+void printMap ()
+{
+  cout << "\n";
+  for (auto x : dataMap)  {
+    cout << x.first << endl;
+    cout << printVector(x.second) << endl;
+    cout << "\n";
+  }
+}
+
+// Checks if a key exist in the map, if it does it returns true
+bool existInMap (string response)
+{
+  auto it = dataMap.find (response);
+
+  if (it == dataMap.end())    return false;
+  else                        return true;
+}
+// ----------------------------------------------------------------------------
+
+// ----------------------------------------------------------------------------
+// Functions that are called by main to determine what the user wants
 void findMean() {
   string response;
   vector<double> nums;
+
   cout << "\nFind Mean" << endl;
-  cout << "Enter the numbers you want to calculate (seperate by whitespace)" << endl;
+  cout << "Enter the name of the vector you want to use ( use -d to display all the names and data)" << endl;
   getline(cin, response);
-  nums = determineVector(response);
+  if (response.compare("-d") == 0)  {
+    printMap();
+    findMean();
+  }
+
+  // Checks if the key exist in the map
+  if (existInMap(response))  {
+    cout << "Invalid name, try again..." << endl;
+    findMean();
+  }
+
+  // Gets the vector for the key
+  nums = dataMap.at(response);
 
   cout << "\nThe mean of " << printVector(nums) << " is: " << Mean(nums) << "\n";
   cout << "With the size of n = " << nums.size() << "\n\n";
@@ -123,10 +228,23 @@ void findMean() {
 void findVariance() {
   string response;
   vector<double> nums;
+
   cout << "\nFind Variance" << endl;
-  cout << "Enter the numbers you want to calculate (seperate by whitespace)" << endl;
+  cout << "Enter the name of the vector you want to use ( use -d to display all the names and data)" << endl;
   getline(cin, response);
-  nums = determineVector(response);
+  if (response.compare("-d") == 0)  {
+    printMap();
+    findMean();
+  }
+
+  // Checks if the key exist in the map
+  if (existInMap(response))  {
+    cout << "Invalid name, try again..." << endl;
+    findMean();
+  }
+
+  // Gets the vector for the key
+  nums = dataMap.at(response);
 
   cout << "\nThe variance of " << printVector(nums) << " is: " << Variance(nums) << "\n";
   cout << "With the size of n = " << nums.size() << "\n\n";
@@ -135,10 +253,23 @@ void findVariance() {
 void findDeviation() {
   string response;
   vector<double> nums;
+
   cout << "\nFind Deviation" << endl;
-  cout << "Enter the numbers you want to calculate (seperate by whitespace)" << endl;
+  cout << "Enter the name of the vector you want to use ( use -d to display all the names and data)" << endl;
   getline(cin, response);
-  nums = determineVector(response);
+  if (response.compare("-d") == 0)  {
+    printMap();
+    findMean();
+  }
+
+  // Checks if the key exist in the map
+  if (existInMap(response))  {
+    cout << "Invalid name, try again..." << endl;
+    findMean();
+  }
+
+  // Gets the vector for the key
+  nums = dataMap.at(response);
 
   cout << "\nThe deviation of " << printVector(nums) << " is: " << Deviation(nums) << "\n";
   cout << "With the size of n = " << nums.size() << "\n\n";
@@ -177,7 +308,7 @@ void findBinomialExpected()  {
   cout << "\nEnter n value: " << endl;
   getline(cin, response);
   nVal = stod(response);
-  
+
   cout << "\nEnter p value: " << endl;
   getline(cin, response);
   pVal = stod(response);
@@ -195,6 +326,7 @@ void findGeometric()  {
   cout << "Enter x value: " << endl;
   getline(cin, response);
   xVal = stod(response);
+  
   cout << "\nEnter p value: " << endl;
   getline(cin, response);
   pVal = stod(response);
@@ -203,15 +335,20 @@ void findGeometric()  {
   cout << "Value for Geometric Distribution is: " << Geometric(xVal, pVal) << "\n\n";
   cin.clear();
 }
+// ----------------------------------------------------------------------------
 
+// ----------------------------------------------------------------------------
 void decideFunction() {
   string response;
   while(true)  {
     response = "";
 
-    cout << "Welcome to Stats Saver" << endl;
+    cout << "Welcome to Stats Saver\n" << endl;
 
     cout << "Select what you want to do" << endl;
+    cout << "S - Store data" << endl;
+    cout << "R - Remove data" << endl;
+    cout << "P - Print all Data" << endl;
     cout << "1 - Mean" << endl;
     cout << "2 - Variance" << endl;
     cout << "3 - Deviation" << endl;
@@ -224,6 +361,15 @@ void decideFunction() {
 
     if (response.compare("0") == 0)  {
       break;
+    }
+    else if (response.compare("S") == 0 || response.compare("s") == 0)  {
+      addToDataMap();
+    }
+    else if (response.compare("R") == 0 || response.compare("r") == 0)  {
+      removeData();
+    }
+    else if (response.compare("P") == 0 || response.compare("p") == 0)  {
+      printMap();
     }
     else if (response.compare("1") == 0)  {
       findMean();
@@ -252,7 +398,7 @@ void decideFunction() {
 }
 
 int main () {
+  // All of the funcitonality is handled by that function;
   decideFunction();
-
   return 0;
 }

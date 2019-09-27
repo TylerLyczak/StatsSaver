@@ -3,12 +3,14 @@
 #include <math.h>
 #include <string>
 #include <sstream>
+#include <unordered_map>
 
 using namespace std;
 
 // Global variables that store all the user data
 vector <string> dataNames;
 vector <vector<double>> userData;
+unordered_map<string, vector<double>> dataMap;
 
 // ----------------------------------------------------------------------------
 // Functions to calculate the value of a given command
@@ -130,24 +132,26 @@ vector<double> determineVector(string response) {
 }
 
 void addToDataVector ()  {
-  string response;
+  string responseName;
+  string responseData;
+
   cout << "Enter a name: " << endl;
-  getline(cin, response);
-  dataNames.push_back(response);
+  getline(cin, responseName);
   cout << "\n";
   cin.clear();
 
   cout << "Enter the numbers you want to calculate (seperate by whitespace)" << endl;
-  getline(cin, response);
-  userData.push_back(determineVector(response));
+  getline(cin, responseData);
+  dataMap[responseName] = determineVector(responseData);
   cout << "\n";
   cin.clear();
 
-  for (int i=0; i<dataNames.size(); i++)  {
-    cout << "Name: " << dataNames.at(i) << endl;
-    cout << printVector(userData.at(i)) << endl;
+  for (auto x : dataMap)  {
+    cout << "Name: " << x.first << endl;
+    cout << printVector(x.second) << endl;
     cout << "\n";
   }
+
   cout << "\n";
 }
 

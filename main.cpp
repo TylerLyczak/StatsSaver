@@ -8,8 +8,6 @@
 using namespace std;
 
 // Global variables that store all the user data
-vector <string> dataNames;
-vector <vector<double>> userData;
 unordered_map<string, vector<double>> dataMap;
 
 // ----------------------------------------------------------------------------
@@ -102,16 +100,8 @@ string printVector(vector<T> nums)  {
   return response;
 }
 
-// Prints the global vectors that the user stores.
-void printGlobalVectors()  {
-  for (int i=0; i<dataNames.size(); i++)  {
-    cout << "Name: " << dataNames.at(i) << endl;
-    cout << printVector(userData.at(i)) << endl;
-    cout << "\n";
-  }
-  cout << "\n";
-}
 
+// Makes a vector of doubles from a string
 vector<double> determineVector(string response) {
   vector<double> nums;
   string delim = " ";
@@ -133,7 +123,7 @@ vector<double> determineVector(string response) {
 
 
 // Adds data that the user wants to the unordered_map
-void addToDataVector ()  {
+void addToDataMap ()  {
   string responseName;
   string responseData;
 
@@ -188,9 +178,9 @@ void removeData ()
 
 
 // Prints the whole map
-void printMap()
-cout << "\n";
+void printMap ()
 {
+  cout << "\n";
   for (auto x : dataMap)  {
     cout << x.first << endl;
     cout << printVector(x.second) << endl;
@@ -198,14 +188,13 @@ cout << "\n";
   }
 }
 
-// Finds the index of the name to use for the data vector
-int findIndex(string name)  {
-  for (int i=0; i<dataNames.size(); i++)  {
-    if (dataNames.at(i).compare(name) == 0) {
-      return i;
-    }
-  }
-  return -1;
+// Checks if a key exist in the map, if it does it returns true
+bool existInMap (string response)
+{
+  auto it = dataMap.find (response);
+
+  if (it == dataMap.end())    return false;
+  else                        return true;
 }
 // ----------------------------------------------------------------------------
 
@@ -214,19 +203,23 @@ int findIndex(string name)  {
 void findMean() {
   string response;
   vector<double> nums;
+
   cout << "\nFind Mean" << endl;
   cout << "Enter the name of the vector you want to use ( use -d to display all the names and data)" << endl;
   getline(cin, response);
   if (response.compare("-d") == 0)  {
-    printGlobalVectors();
+    printMap();
     findMean();
   }
-  int index = findIndex(response);
-  if (index == -1)  {
+
+  // Checks if the key exist in the map
+  if (existInMap(response))  {
     cout << "Invalid name, try again..." << endl;
     findMean();
   }
-  nums = userData.at(index);
+
+  // Gets the vector for the key
+  nums = dataMap.at(response);
 
   cout << "\nThe mean of " << printVector(nums) << " is: " << Mean(nums) << "\n";
   cout << "With the size of n = " << nums.size() << "\n\n";
@@ -235,19 +228,23 @@ void findMean() {
 void findVariance() {
   string response;
   vector<double> nums;
+
   cout << "\nFind Variance" << endl;
   cout << "Enter the name of the vector you want to use ( use -d to display all the names and data)" << endl;
   getline(cin, response);
   if (response.compare("-d") == 0)  {
-    printGlobalVectors();
+    printMap();
     findMean();
   }
-  int index = findIndex(response);
-  if (index == -1)  {
+
+  // Checks if the key exist in the map
+  if (existInMap(response))  {
     cout << "Invalid name, try again..." << endl;
     findMean();
   }
-  nums = userData.at(index);
+
+  // Gets the vector for the key
+  nums = dataMap.at(response);
 
   cout << "\nThe variance of " << printVector(nums) << " is: " << Variance(nums) << "\n";
   cout << "With the size of n = " << nums.size() << "\n\n";
@@ -256,19 +253,23 @@ void findVariance() {
 void findDeviation() {
   string response;
   vector<double> nums;
+
   cout << "\nFind Deviation" << endl;
   cout << "Enter the name of the vector you want to use ( use -d to display all the names and data)" << endl;
   getline(cin, response);
   if (response.compare("-d") == 0)  {
-    printGlobalVectors();
+    printMap();
     findMean();
   }
-  int index = findIndex(response);
-  if (index == -1)  {
+
+  // Checks if the key exist in the map
+  if (existInMap(response))  {
     cout << "Invalid name, try again..." << endl;
     findMean();
   }
-  nums = userData.at(index);
+
+  // Gets the vector for the key
+  nums = dataMap.at(response);
 
   cout << "\nThe deviation of " << printVector(nums) << " is: " << Deviation(nums) << "\n";
   cout << "With the size of n = " << nums.size() << "\n\n";
@@ -361,7 +362,7 @@ void decideFunction() {
       break;
     }
     else if (response.compare("S") == 0 || response.compare("s") == 0)  {
-      addToDataVector();
+      addToDataMap();
     }
     else if (response.compare("R") == 0 || response.compare("r") == 0)  {
       removeData();

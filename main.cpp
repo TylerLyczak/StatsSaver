@@ -178,12 +178,24 @@ void removeData ()
   }
 
   if (found)  {
-    cout << "Removed " << response << " from the data"
+    cout << "Removed " << response << " from the data";
   }
   else  {
     cout << "Couldn't find " << response << " from the data, try again...";
   }
   return;
+}
+
+
+// Prints the whole map
+void printMap()
+cout << "\n";
+{
+  for (auto x : dataMap)  {
+    cout << x.first << endl;
+    cout << printVector(x.second) << endl;
+    cout << "\n";
+  }
 }
 
 // Finds the index of the name to use for the data vector
@@ -334,6 +346,7 @@ void decideFunction() {
     cout << "Select what you want to do" << endl;
     cout << "S - Store data" << endl;
     cout << "R - Remove data" << endl;
+    cout << "P - Print all Data" << endl;
     cout << "1 - Mean" << endl;
     cout << "2 - Variance" << endl;
     cout << "3 - Deviation" << endl;
@@ -352,6 +365,9 @@ void decideFunction() {
     }
     else if (response.compare("R") == 0 || response.compare("r") == 0)  {
       removeData();
+    }
+    else if (response.compare("P") == 0 || response.compare("p") == 0)  {
+      printMap();
     }
     else if (response.compare("1") == 0)  {
       findMean();
